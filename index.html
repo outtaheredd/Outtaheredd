@@ -44,6 +44,7 @@
     .btn-primary{background:linear-gradient(180deg,var(--red),var(--red-dark));color:#fff;box-shadow:0 10px 22px rgba(214,31,38,.26)}
     .btn-dark{background:var(--black);color:#fff}
     .btn-light{background:#fff;color:var(--black);border:1px solid rgba(255,255,255,.35)}
+    .btn-disabled{background:#b9b9b9;color:#fff;cursor:not-allowed;box-shadow:none}
     .hero{
       background:
         linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.68) 42%, rgba(0,0,0,.34) 100%),
@@ -67,10 +68,15 @@
       padding:14px 15px;border:1px solid #d8d8d8;border-radius:14px;font-size:15px;width:100%;font-family:inherit;background:#fff
     }
     textarea{min-height:120px;resize:vertical}
-    .field:focus, .select:focus, textarea:focus{outline:2px solid rgba(214,31,38,.18);border-color:var(--red)}
     .mini{font-size:13px;color:#666;margin-top:14px}
     .pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
     .pill{background:#f2f2f2;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:700}
+    .agreement-box{
+      margin-top:16px; padding:14px; border:1px solid #e7e7e7; border-radius:16px; background:#fafafa;
+      font-size:14px; color:#444;
+    }
+    .agreement-box label{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-weight:700}
+    .agreement-box input{margin-top:3px}
     section{padding:72px 0}
     .section-title{text-align:center;margin-bottom:14px;font-size:clamp(30px, 3vw, 46px);line-height:1;color:var(--black);letter-spacing:-.8px}
     .section-sub{text-align:center;max-width:760px;margin:0 auto 34px;color:#666;font-size:18px}
@@ -82,6 +88,8 @@
     .features{list-style:none;padding:0;margin:18px 0 22px}
     .features li{padding:8px 0;border-bottom:1px solid #efefef;font-weight:700}
     .features li:last-child{border-bottom:none}
+    .pricing-link-wrap{text-align:center; margin-top:24px}
+    .pricing-link{font-weight:800;color:var(--red);font-size:18px}
     .split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
     .photo-frame{border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
     .photo-frame img{width:100%;height:100%;object-fit:cover;min-height:480px}
@@ -103,6 +111,32 @@
     .footer-brand img{width:150px;border-radius:10px}
     .footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end;color:rgba(255,255,255,.88);font-weight:700}
     .small{font-size:14px;color:rgba(255,255,255,.72)}
+    .modal-overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.68);
+      display:none; align-items:center; justify-content:center; padding:18px;
+      z-index:1000;
+    }
+    .modal-overlay.active{display:flex}
+    .modal{
+      width:min(100%, 680px); background:#fff; border-radius:24px; padding:28px;
+      box-shadow:0 22px 50px rgba(0,0,0,.28); position:relative;
+    }
+    .modal h3{margin:0 0 8px; font-size:34px; line-height:1; color:var(--black)}
+    .modal p{margin:0 0 16px; color:#555; font-size:17px}
+    .modal ul{margin:0 0 18px; padding-left:20px; color:#333}
+    .modal li{margin:8px 0; font-weight:700}
+    .modal-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .close-btn{
+      position:absolute; top:14px; right:14px; background:#f3f3f3; color:#222;
+      border:none; width:40px; height:40px; border-radius:999px; font-size:20px; cursor:pointer;
+    }
+    .agree-box{
+      margin:18px 0 16px; background:#fafafa; border:1px solid #e6e6e6; border-radius:16px; padding:14px;
+    }
+    .agree-box label{
+      display:flex; gap:10px; align-items:flex-start; font-weight:700; color:#333; cursor:pointer;
+    }
+    .error-text{color:#b32020; font-size:14px; font-weight:700; display:none; margin-top:8px}
     @media (max-width: 1080px){
       .hero-inner,.split,.cta{grid-template-columns:1fr}
       .cards{grid-template-columns:1fr}
@@ -121,6 +155,7 @@
       .lead-box h2{font-size:28px}
       .section-sub{font-size:17px}
       .cta{padding:26px}
+      .modal h3{font-size:28px}
     }
   </style>
 </head>
@@ -175,8 +210,9 @@
         <h2>Get a Quote Fast</h2>
         <p>Fill this out and the lead will be sent through Netlify Forms.</p>
 
-        <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
+        <form name="quote-request" id="quoteForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
           <input type="hidden" name="form-name" value="quote-request" />
+          <input type="hidden" name="agreed_to_terms" id="agreedToTermsField" value="No" />
           <p style="display:none;">
             <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
           </p>
@@ -205,15 +241,25 @@
               <option>Flexible</option>
             </select>
             <textarea name="job_details" placeholder="Tell us what you need hauled or delivered. Include project details, material type, amount, and anything else that helps us quote it faster." required></textarea>
-            <button class="btn btn-primary" type="submit">Send Quote Request</button>
+            <button class="btn btn-primary" type="submit" id="quoteSubmitButton">Send Quote Request</button>
           </div>
         </form>
+
+        <div class="agreement-box">
+          <label>
+            <input type="checkbox" id="agreedIndicator" disabled>
+            <span>You must review pricing, dump rules, and click <strong>I Agree</strong> before submitting a quote request.</span>
+          </label>
+        </div>
 
         <div class="pillrow">
           <div class="pill">Fastest replies by text</div>
           <div class="pill">Works for homeowners and contractors</div>
         </div>
         <div class="mini">You can also call or text <strong>919-323-7175</strong>.</div>
+        <p style="text-align:center; margin-top:14px;">
+          <a href="#" class="pricing-link open-pricing-popup">See full pricing & dump rules before booking</a>
+        </p>
       </div>
     </div>
   </header>
@@ -221,43 +267,48 @@
   <section id="pricing">
     <div class="container">
       <h2 class="section-title">Simple Pricing That Gets People to Book</h2>
+      <p class="section-sub">Keep it easy, keep it clear, and make it simple for customers to say yes.</p>
       <div class="cards">
         <div class="card">
-          <h3>1 Day Rental</h3>
+          <h3>Standard Load</h3>
           <div class="price">$299</div>
-          <div class="muted">Great for quick cleanups and weekend projects.</div>
+          <div class="muted">Delivery + pickup included.</div>
           <ul class="features">
-            <li>Trailer delivery included</li>
-            <li>Full trailer pickup included</li>
-            <li>Perfect for garage or household cleanouts</li>
-            <li>Fast booking</li>
+            <li>Residential cleanouts</li>
+            <li>Basic junk and debris</li>
+            <li>Fast delivery and pickup</li>
+            <li>Great for small to medium jobs</li>
           </ul>
           <a href="#contact" class="btn btn-primary">Book This</a>
         </div>
         <div class="card" style="border:2px solid var(--red); transform:translateY(-6px);">
-          <h3>2 Day Rental</h3>
-          <div class="price">$399</div>
-          <div class="muted">Best value for bigger projects and remodel debris.</div>
+          <h3>Heavy Materials</h3>
+          <div class="price">$50–$150</div>
+          <div class="muted">Additional fee for dirt, concrete, shingles, and similar loads.</div>
           <ul class="features">
-            <li>Extra time for loading</li>
-            <li>Driveway drop-off and pickup</li>
-            <li>Ideal for moving, renovation, or yard cleanup</li>
-            <li>Popular homeowner option</li>
-          </ul>
-          <a href="#contact" class="btn btn-primary">Most Popular</a>
-        </div>
-        <div class="card">
-          <h3>Full Service Cleanout</h3>
-          <div class="price">Call</div>
-          <div class="muted">Need us to do the labor too? We’ll price the whole job.</div>
-          <ul class="features">
-            <li>Garage cleanouts</li>
-            <li>Household junk removal</li>
-            <li>Rental property turn cleanups</li>
-            <li>Custom quote based on scope</li>
+            <li>Priced by material type</li>
+            <li>Weight-sensitive disposal</li>
+            <li>Great for renovation debris</li>
+            <li>Quoted clearly up front</li>
           </ul>
           <a href="#contact" class="btn btn-primary">Get My Price</a>
         </div>
+        <div class="card">
+          <h3>Extended Rental</h3>
+          <div class="price">$100/day</div>
+          <div class="muted">Need more time? Keep the trailer longer.</div>
+          <ul class="features">
+            <li>Extra days available by request</li>
+            <li>Helps on bigger jobs</li>
+            <li>Subject to availability</li>
+            <li>Clear daily pricing</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Ask About Availability</a>
+        </div>
+      </div>
+
+      <div class="pricing-link-wrap">
+        <a href="#" class="pricing-link open-pricing-popup">View Full Pricing, Service Agreement & Dump Rules →</a>
       </div>
     </div>
   </section>
@@ -265,6 +316,7 @@
   <section class="band" id="services">
     <div class="container">
       <h2 class="section-title">Services Customers Actually Search For</h2>
+      <p class="section-sub">A clear service list helps visitors instantly know they’re in the right place.</p>
       <div class="service-grid">
         <div class="service"><h3>Dump Trailer Rentals</h3><p>Easy drop-off and pickup for household, remodel, and cleanup projects.</p></div>
         <div class="service"><h3>Junk Removal</h3><p>Furniture, boxes, garage clutter, and general junk hauled away fast.</p></div>
@@ -281,9 +333,10 @@
       </div>
       <div>
         <h2 class="section-title" style="text-align:left; margin-bottom:12px;">Why People Choose Outta Here Dump & Deliver</h2>
+        <p class="section-sub" style="text-align:left; margin:0 0 8px;">Trust matters. Real equipment and clear communication help customers feel comfortable calling right away.</p>
         <div class="bullets">
           <div class="bullet">✔ Real local business with a clean, professional setup</div>
-          <div class="bullet">✔ Trailer ready for residential and contractor jobs</div>
+          <div class="bullet">✔ Trailer that looks ready for residential and contractor jobs</div>
           <div class="bullet">✔ Fast communication by call, text, email, or form</div>
           <div class="bullet">✔ Clear pricing instead of making customers guess</div>
           <div class="bullet">✔ Great fit for homeowners, landlords, and small contractors</div>
@@ -326,5 +379,105 @@
       </div>
     </div>
   </footer>
+
+  <div class="modal-overlay" id="pricingModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pricingModalTitle">
+      <button class="close-btn" id="closePricingModal" aria-label="Close popup">×</button>
+      <h3 id="pricingModalTitle">Review Pricing & Rules Before Booking</h3>
+      <p>Customers must agree to these terms before submitting a quote request.</p>
+      <ul>
+        <li>Load must remain level with the top rails</li>
+        <li>No paint, chemicals, tires, batteries, or liquids</li>
+        <li>Overfill fee: $75+</li>
+        <li>Heavy materials: $50–$150 additional</li>
+        <li>Sorting / mixed load fee: $100+</li>
+        <li>Extended rental: $100/day</li>
+      </ul>
+      <div class="agree-box">
+        <label>
+          <input type="checkbox" id="modalAgreeCheckbox">
+          <span>I have reviewed the pricing sheet, service agreement, and dump rules, and I agree to these terms.</span>
+        </label>
+        <div class="error-text" id="agreeError">Please check the box before continuing.</div>
+      </div>
+      <div class="modal-actions">
+        <a class="btn btn-primary" href="/OuttaHereDD_Contract_Level_v2.pdf" target="_blank" rel="noopener">Open Full PDF</a>
+        <button class="btn btn-dark" id="confirmAgreementButton">I Agree</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('pricingModal');
+    const openButtons = document.querySelectorAll('.open-pricing-popup');
+    const closeButton = document.getElementById('closePricingModal');
+    const quoteForm = document.getElementById('quoteForm');
+    const quoteSubmitButton = document.getElementById('quoteSubmitButton');
+    const modalAgreeCheckbox = document.getElementById('modalAgreeCheckbox');
+    const confirmAgreementButton = document.getElementById('confirmAgreementButton');
+    const agreeError = document.getElementById('agreeError');
+    const agreedIndicator = document.getElementById('agreedIndicator');
+    const agreedToTermsField = document.getElementById('agreedToTermsField');
+
+    let hasAgreedToTerms = false;
+
+    function openModal() {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      agreeError.style.display = 'none';
+    }
+
+    function setAgreedState() {
+      hasAgreedToTerms = true;
+      agreedIndicator.checked = true;
+      agreedToTermsField.value = 'Yes';
+      quoteSubmitButton.disabled = false;
+      quoteSubmitButton.classList.remove('btn-disabled');
+    }
+
+    quoteSubmitButton.disabled = true;
+    quoteSubmitButton.classList.add('btn-disabled');
+
+    openButtons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    closeButton.addEventListener('click', closeModal);
+
+    confirmAgreementButton.addEventListener('click', function() {
+      if (!modalAgreeCheckbox.checked) {
+        agreeError.style.display = 'block';
+        return;
+      }
+      setAgreedState();
+      closeModal();
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    quoteForm.addEventListener('submit', function(e) {
+      if (!hasAgreedToTerms) {
+        e.preventDefault();
+        openModal();
+      }
+    });
+  </script>
 </body>
 </html>
