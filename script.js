@@ -250,5 +250,75 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     });
+// ==========================================
+// TESTIMONIAL SLIDER
+// ==========================================
 
+const testimonials = document.querySelectorAll(".testimonial");
+const dots = document.querySelectorAll(".dot");
+
+let currentSlide = 0;
+let slideInterval;
+
+function showSlide(index){
+
+    testimonials.forEach((testimonial,i)=>{
+
+        testimonial.classList.toggle("active", i===index);
+
+    });
+
+    dots.forEach((dot,i)=>{
+
+        dot.classList.toggle("active", i===index);
+
+    });
+
+    currentSlide = index;
+
+}
+
+function nextSlide(){
+
+    let next = currentSlide + 1;
+
+    if(next >= testimonials.length){
+
+        next = 0;
+
+    }
+
+    showSlide(next);
+
+}
+
+function startSlider(){
+
+    slideInterval = setInterval(nextSlide,6000);
+
+}
+
+function restartSlider(){
+
+    clearInterval(slideInterval);
+
+    startSlider();
+
+}
+
+dots.forEach((dot,index)=>{
+
+    dot.addEventListener("click",()=>{
+
+        showSlide(index);
+
+        restartSlider();
+
+    });
+
+});
+
+showSlide(0);
+
+startSlider();
 });
