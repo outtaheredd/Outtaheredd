@@ -1,256 +1,254 @@
-/*=========================================
- Outta Here Dump & Deliver
- script.js
-=========================================*/
+// ==========================================
+// OUTTA HERE DUMP & DELIVER
+// Main JavaScript
+// ==========================================
 
-const menuButton = document.getElementById("menuButton");
-const navMenu = document.getElementById("navMenu");
+document.addEventListener("DOMContentLoaded", () => {
 
-menuButton.addEventListener("click", () => {
+    const header = document.querySelector("header");
+    const menuButton = document.getElementById("menuButton");
+    const nav = document.querySelector("nav");
+    const navLinks = document.querySelectorAll("nav a");
+    const backToTop = document.getElementById("backToTop");
 
-    navMenu.classList.toggle("active");
+    // ==========================================
+    // Mobile Menu
+    // ==========================================
 
-    const icon = menuButton.querySelector("i");
+    if (menuButton) {
 
-    if(navMenu.classList.contains("active")){
+        menuButton.addEventListener("click", () => {
 
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
+            nav.classList.toggle("active");
 
-    }else{
+            document.body.classList.toggle("mobile-open");
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+            menuButton.innerHTML = nav.classList.contains("active")
+                ? '<i class="fa-solid fa-xmark"></i>'
+                : '<i class="fa-solid fa-bars"></i>';
 
-    }
-
-});
-
-document.querySelectorAll("nav a").forEach(link=>{
-
-    link.addEventListener("click",()=>{
-
-        navMenu.classList.remove("active");
-
-        const icon = menuButton.querySelector("i");
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
-    });
-
-});
-
-/*=========================================
- Sticky Header
-=========================================*/
-
-const header = document.querySelector("header");
-
-window.addEventListener("scroll",()=>{
-
-    if(window.scrollY > 40){
-
-        header.style.boxShadow="0 10px 30px rgba(0,0,0,.10)";
-        header.style.background="rgba(255,255,255,.98)";
-
-    }else{
-
-        header.style.boxShadow="0 3px 20px rgba(0,0,0,.05)";
-        header.style.background="rgba(255,255,255,.96)";
+        });
 
     }
 
-});
+    navLinks.forEach(link => {
 
-/*=========================================
- Scroll Animations
-=========================================*/
+        link.addEventListener("click", () => {
 
-const observer = new IntersectionObserver((entries)=>{
+            nav.classList.remove("active");
 
-    entries.forEach(entry=>{
+            document.body.classList.remove("mobile-open");
 
-        if(entry.isIntersecting){
+            if(menuButton){
 
-            entry.target.classList.add("show");
+                menuButton.innerHTML =
+                '<i class="fa-solid fa-bars"></i>';
 
-        }
-
-    });
-
-},{
-    threshold:.15
-});
-
-document.querySelectorAll(
-
-    ".step, .service-card, .price-card, .feature, .city-grid div, .contact-item"
-
-).forEach(el=>{
-
-    el.classList.add("hidden");
-
-    observer.observe(el);
-
-});
-
-/*=========================================
- Smooth Anchor Scrolling
-=========================================*/
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-
-    anchor.addEventListener("click",function(e){
-
-        const target=document.querySelector(this.getAttribute("href"));
-
-        if(!target) return;
-
-        e.preventDefault();
-
-        window.scrollTo({
-
-            top:target.offsetTop-80,
-
-            behavior:"smooth"
+            }
 
         });
 
     });
 
-});
+    // ==========================================
+    // Sticky Header
+    // ==========================================
 
-/*==============================
-SCROLL ANIMATIONS
-==============================*/
+    window.addEventListener("scroll", () => {
 
-.hidden{
+        if(window.scrollY > 50){
 
-    opacity:0;
+            header.style.top = "10px";
+            header.style.boxShadow =
+            "0 15px 35px rgba(0,0,0,.15)";
 
-    transform:translateY(40px);
+        }else{
 
-    transition:.7s ease;
+            header.style.top = "20px";
+            header.style.boxShadow =
+            "0 15px 35px rgba(0,0,0,.08)";
 
-}
+        }
 
-.show{
+    });
 
-    opacity:1;
+    // ==========================================
+    // Fade-In Animation
+    // ==========================================
 
-    transform:translateY(0);
-
-}
-
-/*=========================================
- Active Navigation Highlight
-=========================================*/
-
-const sections = document.querySelectorAll("section[id]");
-
-window.addEventListener("scroll", () => {
-
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-
-        const sectionHeight = section.offsetHeight;
-
-        const sectionTop = section.offsetTop - 120;
-
-        const sectionId = section.getAttribute("id");
-
-        const navLink = document.querySelector(
-            'nav a[href="#' + sectionId + '"]'
+    const animatedItems =
+        document.querySelectorAll(
+            ".step,.service-card,.price-card,.feature,.quote-form,.contact-item,.area-image,.area-content"
         );
 
-        if (!navLink) return;
+    animatedItems.forEach(item => {
 
-        if (
-            scrollY > sectionTop &&
-            scrollY <= sectionTop + sectionHeight
-        ) {
+        item.classList.add("fade-up");
 
-            navLink.classList.add("active-link");
+    });
 
-        } else {
+    const observer = new IntersectionObserver((entries)=>{
 
-            navLink.classList.remove("active-link");
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("show");
+
+            }
+
+        });
+
+    },{
+
+        threshold:.15
+
+    });
+
+    animatedItems.forEach(item=>{
+
+        observer.observe(item);
+
+    });
+
+    // ==========================================
+    // Active Navigation
+    // ==========================================
+
+    const sections = document.querySelectorAll("section[id]");
+
+    function updateActiveNav() {
+
+        const scrollY = window.pageYOffset;
+
+        sections.forEach(section => {
+
+            const sectionTop = section.offsetTop - 140;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute("id");
+
+            if (
+                scrollY >= sectionTop &&
+                scrollY < sectionTop + sectionHeight
+            ) {
+
+                navLinks.forEach(link => {
+
+                    link.classList.remove("active");
+
+                    if (
+                        link.getAttribute("href") === "#" + sectionId
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+                });
+
+            }
+
+        });
+
+    }
+
+    window.addEventListener("scroll", updateActiveNav);
+
+    // ==========================================
+    // Back To Top Button
+    // ==========================================
+
+    if (backToTop) {
+
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 500) {
+
+                backToTop.classList.add("show");
+
+            } else {
+
+                backToTop.classList.remove("show");
+
+            }
+
+        });
+
+        backToTop.addEventListener("click", () => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        });
+
+    }
+
+    // ==========================================
+    // Smooth Anchor Scrolling
+    // ==========================================
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+        anchor.addEventListener("click", function (e) {
+
+            const target = document.querySelector(
+                this.getAttribute("href")
+            );
+
+            if (!target) return;
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+        });
+
+    });
+
+    // ==========================================
+    // Footer Copyright Year
+    // ==========================================
+
+    const year = document.getElementById("year");
+
+    if (year) {
+
+        year.textContent = new Date().getFullYear();
+
+    }
+
+    // ==========================================
+    // Close Menu on Resize
+    // ==========================================
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 950) {
+
+            nav.classList.remove("active");
+
+            document.body.classList.remove("mobile-open");
+
+            if (menuButton) {
+
+                menuButton.innerHTML =
+                    '<i class="fa-solid fa-bars"></i>';
+
+            }
 
         }
 
     });
 
 });
-
-/*=========================================
- Back To Top Button
-=========================================*/
-
-const topButton = document.createElement("button");
-
-topButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-
-topButton.className = "back-to-top";
-
-document.body.appendChild(topButton);
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 500) {
-
-        topButton.classList.add("show-top");
-
-    } else {
-
-        topButton.classList.remove("show-top");
-
-    }
-
-});
-
-topButton.addEventListener("click", () => {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-});
-
-/*=========================================
- Button Hover Effect
-=========================================*/
-
-document.querySelectorAll(".btn").forEach(button => {
-
-    button.addEventListener("mouseenter", () => {
-
-        button.style.transform = "translateY(-3px)";
-
-    });
-
-    button.addEventListener("mouseleave", () => {
-
-        button.style.transform = "";
-
-    });
-
-});
-
-/*=========================================
- Footer Year
-=========================================*/
-
-const copyright = document.querySelector(".copyright");
-
-if (copyright) {
-
-    copyright.innerHTML =
-        `© ${new Date().getFullYear()} Outta Here Dump & Deliver LLC. All Rights Reserved.`;
-
-}
