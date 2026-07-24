@@ -1,480 +1,999 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Outta Here Dump & Deliver | Dump Trailer Rentals & Material Delivery</title>
-  <meta name="description" content="Outta Here Dump & Deliver offers dump trailer rentals, junk removal, cleanouts, and gravel, dirt, and mulch delivery in Clayton, Selma, Smithfield, and surrounding areas." />
-  <meta property="og:title" content="Outta Here Dump & Deliver" />
-  <meta property="og:description" content="Dump trailer rentals, junk removal, cleanouts, and material delivery." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://outtaheredd.com" />
-  <meta property="og:image" content="https://outtaheredd.com/truck-trailer.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://outtaheredd.com" />
-  <style>
-    :root{
-      --red:#d61f26;
-      --red-dark:#a51318;
-      --gold:#e8b93c;
-      --black:#111111;
-      --text:#222222;
-      --white:#ffffff;
-      --shadow:0 12px 30px rgba(0,0,0,.16);
-      --radius:18px;
-      --max:1180px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff;line-height:1.5}
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-    .container{width:min(calc(100% - 32px), var(--max)); margin:0 auto;}
-    .topbar{background:var(--black);color:#fff;padding:10px 0;font-size:14px}
-    .topbar .wrap{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
-    .topbar strong{color:var(--gold)}
-    .nav{background:#fff;border-bottom:1px solid #ececec;position:sticky;top:0;z-index:20;box-shadow:0 6px 20px rgba(0,0,0,.05)}
-    .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:14px;min-width:0}
-    .brand img{width:180px;max-width:42vw;border-radius:10px}
-    .brand-text{font-weight:800;letter-spacing:.4px;font-size:18px;color:var(--black)}
-    .nav-links{display:flex;gap:22px;align-items:center;font-weight:700;color:#333;flex-wrap:wrap;justify-content:flex-end}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:999px;font-weight:800;transition:.18s ease;border:none;cursor:pointer}
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(180deg,var(--red),var(--red-dark));color:#fff;box-shadow:0 10px 22px rgba(214,31,38,.26)}
-    .btn-dark{background:var(--black);color:#fff}
-    .btn-light{background:#fff;color:var(--black);border:1px solid rgba(255,255,255,.35)}
-    .btn-disabled{background:#b9b9b9;color:#fff;cursor:not-allowed;box-shadow:none}
-    .hero{
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.68) 42%, rgba(0,0,0,.34) 100%),
-        url('truck-trailers.jpeg') center/cover no-repeat;
-      color:#fff;
-    }
-    .hero-inner{min-height:760px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:54px 0 60px}
-    .eyebrow{display:inline-block;background:rgba(232,185,60,.16);color:var(--gold);font-weight:800;padding:8px 14px;border-radius:999px;letter-spacing:.4px;font-size:14px;margin-bottom:16px;border:1px solid rgba(232,185,60,.25)}
-    h1{font-size:clamp(38px, 5vw, 70px);line-height:.98;margin:0 0 16px;letter-spacing:-1.3px;max-width:760px}
-    .hero p{font-size:clamp(18px, 2vw, 22px);max-width:700px;color:rgba(255,255,255,.92);margin:0 0 26px}
-    .hero-points{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:10px 18px;margin:0 0 28px;padding:0;list-style:none;max-width:640px}
-    .hero-points li{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;font-weight:700;backdrop-filter: blur(4px)}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
-    .quick-trust{display:flex;flex-wrap:wrap;gap:10px;color:rgba(255,255,255,.95);font-weight:700;font-size:14px}
-    .quick-trust span{background:rgba(255,255,255,.08);border-radius:999px;padding:10px 14px;border:1px solid rgba(255,255,255,.12)}
-    .lead-box{background:rgba(255,255,255,.97);color:var(--text);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
-    .lead-box h2{margin:0 0 8px;font-size:30px;line-height:1.05;color:var(--black)}
-    .lead-box p{margin:0 0 18px;color:#555}
-    .lead-grid{display:grid;gap:12px}
-    .field, .select, textarea{
-      padding:14px 15px;border:1px solid #d8d8d8;border-radius:14px;font-size:15px;width:100%;font-family:inherit;background:#fff
-    }
-    textarea{min-height:120px;resize:vertical}
-    .mini{font-size:13px;color:#666;margin-top:14px}
-    .pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
-    .pill{background:#f2f2f2;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:700}
-    .agreement-box{
-      margin-top:16px; padding:14px; border:1px solid #e7e7e7; border-radius:16px; background:#fafafa;
-      font-size:14px; color:#444;
-    }
-    .agreement-box label{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-weight:700}
-    .agreement-box input{margin-top:3px}
-    section{padding:72px 0}
-    .section-title{text-align:center;margin-bottom:14px;font-size:clamp(30px, 3vw, 46px);line-height:1;color:var(--black);letter-spacing:-.8px}
-    .section-sub{text-align:center;max-width:760px;margin:0 auto 34px;color:#666;font-size:18px}
-    .cards{display:grid;grid-template-columns:repeat(3, 1fr);gap:22px}
-    .card{background:#fff;border:1px solid #ececec;border-radius:var(--radius);padding:24px;box-shadow:0 12px 28px rgba(0,0,0,.05)}
-    .card h3{margin:0 0 10px;font-size:24px;color:var(--black)}
-    .price{font-size:42px;font-weight:900;color:var(--red);line-height:1;margin-bottom:10px}
-    .muted{color:#666}
-    .features{list-style:none;padding:0;margin:18px 0 22px}
-    .features li{padding:8px 0;border-bottom:1px solid #efefef;font-weight:700}
-    .features li:last-child{border-bottom:none}
-    .pricing-link-wrap{text-align:center; margin-top:24px}
-    .pricing-link{font-weight:800;color:var(--red);font-size:18px}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
-    .photo-frame{border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
-    .photo-frame img{width:100%;height:100%;object-fit:cover;min-height:480px}
-    .bullets{display:grid;gap:14px;margin-top:20px}
-    .bullet{background:#fff;border:1px solid #ececec;border-radius:16px;padding:16px 18px;font-weight:700;box-shadow:0 10px 22px rgba(0,0,0,.04)}
-    .band{background:linear-gradient(180deg, var(--black), #1b1b1b);color:#fff}
-    .band .section-title, .band .section-sub{color:#fff}
-    .service-grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:18px}
-    .service{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px}
-    .service h3{margin:0 0 8px;font-size:22px;color:#fff}
-    .service p{margin:0;color:rgba(255,255,255,.82)}
-    .cta{background:linear-gradient(135deg, #181818 0%, #272727 100%);color:#fff;border-radius:28px;padding:34px;display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center;box-shadow:var(--shadow)}
-    .cta h2{margin:0 0 10px;font-size:clamp(30px, 4vw, 50px);line-height:1}
-    .cta p{margin:0;color:rgba(255,255,255,.88);font-size:18px}
-    .cta-actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
-    footer{background:#0f0f0f;color:#fff;padding:26px 0 40px}
-    .footer-grid{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
-    .footer-brand{display:flex;align-items:center;gap:14px;font-weight:800;font-size:18px}
-    .footer-brand img{width:150px;border-radius:10px}
-    .footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end;color:rgba(255,255,255,.88);font-weight:700}
-    .small{font-size:14px;color:rgba(255,255,255,.72)}
-    .modal-overlay{
-      position:fixed; inset:0; background:rgba(0,0,0,.68);
-      display:none; align-items:center; justify-content:center; padding:18px;
-      z-index:1000;
-    }
-    .modal-overlay.active{display:flex}
-    .modal{
-      width:min(100%, 680px); background:#fff; border-radius:24px; padding:28px;
-      box-shadow:0 22px 50px rgba(0,0,0,.28); position:relative;
-    }
-    .modal h3{margin:0 0 8px; font-size:34px; line-height:1; color:var(--black)}
-    .modal p{margin:0 0 16px; color:#555; font-size:17px}
-    .modal ul{margin:0 0 18px; padding-left:20px; color:#333}
-    .modal li{margin:8px 0; font-weight:700}
-    .modal-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
-    .close-btn{
-      position:absolute; top:14px; right:14px; background:#f3f3f3; color:#222;
-      border:none; width:40px; height:40px; border-radius:999px; font-size:20px; cursor:pointer;
-    }
-    .agree-box{
-      margin:18px 0 16px; background:#fafafa; border:1px solid #e6e6e6; border-radius:16px; padding:14px;
-    }
-    .agree-box label{
-      display:flex; gap:10px; align-items:flex-start; font-weight:700; color:#333; cursor:pointer;
-    }
-    .error-text{color:#b32020; font-size:14px; font-weight:700; display:none; margin-top:8px}
-    @media (max-width: 1080px){
-      .hero-inner,.split,.cta{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .service-grid{grid-template-columns:1fr 1fr}
-      .cta-actions{justify-content:flex-start}
-    }
-    @media (max-width: 760px){
-      .nav .wrap{flex-direction:column;align-items:flex-start}
-      .nav-links{gap:12px}
-      .brand img{width:160px}
-      .hero-inner{min-height:auto;padding:40px 0 46px}
-      .hero-points{grid-template-columns:1fr}
-      .service-grid{grid-template-columns:1fr}
-      .topbar .wrap,.footer-grid{grid-template-columns:1fr;display:grid}
-      .footer-links{justify-content:flex-start}
-      .lead-box h2{font-size:28px}
-      .section-sub{font-size:17px}
-      .cta{padding:26px}
-      .modal h3{font-size:28px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Outta Here Dump & Deliver | Dump Trailer Rentals & Junk Removal</title>
+
+    <meta name="description"
+        content="Outta Here Dump & Deliver provides dump trailer rentals, junk removal, cleanouts, and material delivery throughout Johnston County, NC.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://kit.fontawesome.com/6d4fcb1d42.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-  <div class="topbar">
-    <div class="container wrap">
-      <div><strong>Same-Day Delivery Available</strong> • Dump Trailer Rentals • Cleanouts • Material Delivery</div>
-      <div>Call or Text: <strong><a href="tel:9193237175">919-323-7175</a></strong> • <a href="mailto:OuttaHereDD@gmail.com">OuttaHereDD@gmail.com</a></div>
+
+<header>
+
+    <div class="container">
+
+        <a href="#" class="logo">
+
+            <img src="images/logo.png" alt="Outta Here Dump & Deliver Logo">
+
+        </a>
+
+        <nav id="navMenu">
+
+            <ul>
+
+                <li><a href="#services">Services</a></li>
+
+                <li><a href="#pricing">Pricing</a></li>
+
+                <li><a href="#service-area">Service Area</a></li>
+
+                <li><a href="#quote">Contact</a></li>
+
+            </ul>
+
+        </nav>
+
+        <a href="#quote" class="btn btn-primary desktop-button">
+
+            Get Quote
+
+        </a>
+
+        <button id="menuButton">
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
     </div>
-  </div>
 
-  <nav class="nav">
-    <div class="container wrap">
-      <div class="brand">
-        <img src="logo.PNG" alt="Outta Here Dump & Deliver logo">
-        <div class="brand-text">Outta Here Dump & Deliver</div>
-      </div>
-      <div class="nav-links">
-        <a href="#pricing">Pricing</a>
-        <a href="#services">Services</a>
-        <a href="#why-us">Why Us</a>
-        <a href="#contact" class="btn btn-primary">Get a Quote</a>
-      </div>
+</header>
+
+
+
+<section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="container hero-grid">
+
+        <div class="hero-content">
+
+            <span class="eyebrow">
+
+                JOHNSTON COUNTY • LOCALLY OWNED
+
+            </span>
+
+            <h1>
+
+                Need a Dumpster?<br>
+                We Deliver a Dump Trailer Instead.
+
+            </h1>
+
+            <p>
+
+                Fast, affordable dump trailer rentals, junk removal, garage cleanouts,
+                property cleanouts, and material delivery.
+
+                We deliver it.
+                You fill it.
+                We'll haul it away.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#quote" class="btn btn-primary">
+
+                    Get Free Quote
+
+                </a>
+
+                <a href="tel:9195555555" class="btn btn-secondary">
+
+                    <i class="fas fa-phone"></i>
+
+                    Call Now
+
+                </a>
+
+            </div>
+
+            <div class="trust-grid">
+
+                <div>
+
+                    <i class="fas fa-circle-check"></i>
+
+                    Locally Owned
+
+                </div>
+
+                <div>
+
+                    <i class="fas fa-circle-check"></i>
+
+                    Fully Insured
+
+                </div>
+
+                <div>
+
+                    <i class="fas fa-circle-check"></i>
+
+                    Residential & Commercial
+
+                </div>
+
+                <div>
+
+                    <i class="fas fa-circle-check"></i>
+
+                    Fast Response
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+
+            <img src="images/hero.jpg" alt="Dump Trailer Rental">
+
+        </div>
+
     </div>
-  </nav>
 
-  <header class="hero">
-    <div class="container hero-inner">
-      <div>
-        <div class="eyebrow">LOCAL • FAST • SIMPLE PRICING</div>
-        <h1>Dump Trailer Delivered to Your Driveway — Fast.</h1>
-        <p>Outta Here Dump & Deliver helps homeowners, contractors, and landlords with dump trailer rentals, junk hauling, garage cleanouts, and gravel, dirt, or mulch delivery in Clayton, Selma, Smithfield, and surrounding areas.</p>
-        <ul class="hero-points">
-          <li>Starting at $299 delivered</li>
-          <li>Same-day and next-day availability</li>
-          <li>Driveway-friendly trailer service</li>
-          <li>Fast call, text, or form quotes</li>
-        </ul>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="tel:9193237175">Call 919-323-7175</a>
-          <a class="btn btn-light" href="sms:9193237175">Text for Quote</a>
+</section>
+
+
+
+<section class="how-it-works">
+
+    <div class="container">
+
+        <h2>
+
+            How It Works
+
+        </h2>
+
+        <p class="section-subtitle">
+
+            Renting a dump trailer has never been easier.
+
+        </p>
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="icon">
+
+                    <i class="fas fa-file-signature"></i>
+
+                </div>
+
+                <h3>Request a Quote</h3>
+
+                <p>
+
+                    Tell us what you need and when you need it.
+
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="icon">
+
+                    <i class="fas fa-truck"></i>
+
+                </div>
+
+                <h3>We Deliver</h3>
+
+                <p>
+
+                    We bring the trailer directly to your property.
+
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="icon">
+
+                    <i class="fas fa-dumpster"></i>
+
+                </div>
+
+                <h3>Fill It</h3>
+
+                <p>
+
+                    Load debris, junk, brush, construction waste, or materials.
+
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="icon">
+
+                    <i class="fas fa-recycle"></i>
+
+                </div>
+
+                <h3>We'll Haul It Away</h3>
+
+                <p>
+
+                    Once you're finished, we'll pick it up and dispose of everything properly.
+
+                </p>
+
+            </div>
+
         </div>
-        <div class="quick-trust">
-          <span>Locally Owned</span>
-          <span>Clear Pricing</span>
-          <span>Easy Drop-Off & Pickup</span>
-          <span>Residential & Small Contractor Friendly</span>
-          <span>Fully Insured</span>
+
+    </div>
+
+</section>
+
+  <!-- ===========================
+SERVICES
+============================ -->
+
+<section id="services" class="services">
+
+    <div class="container">
+
+        <span class="section-tag">
+            OUR SERVICES
+        </span>
+
+        <h2>
+            Everything You Need, One Call Away
+        </h2>
+
+        <p class="section-subtitle">
+            Whether you're cleaning out a garage, remodeling a home, or
+            need materials delivered, we're here to help.
+        </p>
+
+        <div class="service-grid">
+
+            <article class="service-card">
+
+                <i class="fas fa-trailer"></i>
+
+                <h3>Dump Trailer Rentals</h3>
+
+                <p>
+                    Our driveway-friendly dump trailers are perfect for
+                    home projects, landscaping, roofing, renovations,
+                    and contractor jobs.
+                </p>
+
+            </article>
+
+            <article class="service-card">
+
+                <i class="fas fa-trash"></i>
+
+                <h3>Junk Removal</h3>
+
+                <p>
+                    Don't want to load it yourself?
+                    We'll do all the heavy lifting and haul everything away.
+                </p>
+
+            </article>
+
+            <article class="service-card">
+
+                <i class="fas fa-house"></i>
+
+                <h3>Garage Cleanouts</h3>
+
+                <p>
+                    Reclaim your garage with fast, affordable cleanout
+                    services for unwanted clutter.
+                </p>
+
+            </article>
+
+            <article class="service-card">
+
+                <i class="fas fa-tree"></i>
+
+                <h3>Property Cleanouts</h3>
+
+                <p>
+                    Brush, storm debris, rental properties,
+                    estates, and full property cleanups.
+                </p>
+
+            </article>
+
+            <article class="service-card">
+
+                <i class="fas fa-truck-ramp-box"></i>
+
+                <h3>Material Delivery</h3>
+
+                <p>
+                    Gravel, mulch, topsoil, sand,
+                    and other landscape materials delivered
+                    directly to your property.
+                </p>
+
+            </article>
+
+            <article class="service-card">
+
+                <i class="fas fa-hammer"></i>
+
+                <h3>Contractor Services</h3>
+
+                <p>
+                    Reliable dump trailer rentals and hauling
+                    solutions for contractors and builders.
+                </p>
+
+            </article>
+
         </div>
-      </div>
 
-      <div class="lead-box" id="contact">
-        <h2>Get a Quote Fast</h2>
-        <p>Fill this out and the lead will be sent through Netlify Forms.</p>
+    </div>
 
-        <form name="quote-request" id="quoteForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
-          <input type="hidden" name="form-name" value="quote-request" />
-          <input type="hidden" name="agreed_to_terms" id="agreedToTermsField" value="No" />
-          <p style="display:none;">
-            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-          </p>
+</section>
 
-          <div class="lead-grid">
-            <input class="field" type="text" name="customer_name" placeholder="Full Name" required>
-            <input class="field" type="tel" name="phone" placeholder="Phone Number" required>
-            <input class="field" type="email" name="email" placeholder="Email Address">
-            <input class="field" type="text" name="address" placeholder="Job Address or City">
-            <select class="select" name="service_needed" required>
-              <option value="">Select Service Needed</option>
-              <option>Dump Trailer Rental</option>
-              <option>Junk Removal</option>
-              <option>Garage / Property Cleanout</option>
-              <option>Mulch Delivery</option>
-              <option>Dirt Delivery</option>
-              <option>Gravel Delivery</option>
-              <option>Other</option>
-            </select>
-            <select class="select" name="timeframe">
-              <option value="">When do you need it?</option>
-              <option>Today</option>
-              <option>Tomorrow</option>
-              <option>This Week</option>
-              <option>This Weekend</option>
-              <option>Flexible</option>
-            </select>
-            <textarea name="job_details" placeholder="Tell us what you need hauled or delivered. Include project details, material type, amount, and anything else that helps us quote it faster." required></textarea>
-            <button class="btn btn-primary" type="submit" id="quoteSubmitButton">Send Quote Request</button>
-          </div>
+
+
+<!-- ===========================
+PRICING
+============================ -->
+
+<section id="pricing" class="pricing">
+
+    <div class="container">
+
+        <span class="section-tag">
+            SIMPLE PRICING
+        </span>
+
+        <h2>
+
+            Straightforward Pricing.
+            No Hidden Fees.
+
+        </h2>
+
+        <div class="pricing-grid">
+
+            <div class="price-card">
+
+                <h3>
+
+                    Standard Rental
+
+                </h3>
+
+                <div class="price">
+
+                    Starting at
+
+                    <span>$299</span>
+
+                </div>
+
+                <ul>
+
+                    <li>Trailer Delivery</li>
+
+                    <li>Trailer Pickup</li>
+
+                    <li>Easy Loading</li>
+
+                    <li>Residential Projects</li>
+
+                </ul>
+
+                <a href="#quote" class="btn btn-primary">
+
+                    Get Quote
+
+                </a>
+
+            </div>
+
+            <div class="price-card featured">
+
+                <div class="popular">
+
+                    MOST POPULAR
+
+                </div>
+
+                <h3>
+
+                    Weekend Rental
+
+                </h3>
+
+                <div class="price">
+
+                    Starting at
+
+                    <span>$350</span>
+
+                </div>
+
+                <ul>
+
+                    <li>Friday Delivery</li>
+
+                    <li>Sunday Pickup</li>
+
+                    <li>Perfect Weekend Projects</li>
+
+                    <li>Extra Time Included</li>
+
+                </ul>
+
+                <a href="#quote" class="btn btn-primary">
+
+                    Reserve Now
+
+                </a>
+
+            </div>
+
+            <div class="price-card">
+
+                <h3>
+
+                    Custom Jobs
+
+                </h3>
+
+                <div class="price">
+
+                    <span>Free Quote</span>
+
+                </div>
+
+                <ul>
+
+                    <li>Junk Removal</li>
+
+                    <li>Material Delivery</li>
+
+                    <li>Heavy Materials</li>
+
+                    <li>Commercial Projects</li>
+
+                </ul>
+
+                <a href="#quote" class="btn btn-primary">
+
+                    Request Quote
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===========================
+WHY CHOOSE US
+============================ -->
+
+<section class="why-us">
+
+    <div class="container">
+
+        <span class="section-tag">
+
+            WHY CHOOSE US
+
+        </span>
+
+        <h2>
+
+            Local Service You Can Count On
+
+        </h2>
+
+        <div class="features-grid">
+
+            <div class="feature">
+
+                <i class="fas fa-shield-halved"></i>
+
+                <h3>Fully Insured</h3>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fas fa-handshake"></i>
+
+                <h3>Honest Pricing</h3>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fas fa-clock"></i>
+
+                <h3>Fast Response</h3>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fas fa-location-dot"></i>
+
+                <h3>Locally Owned</h3>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fas fa-star"></i>
+
+                <h3>Professional Service</h3>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <h3>Flexible Scheduling</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+  <!-- ===========================
+SERVICE AREA
+============================ -->
+
+<section id="service-area" class="service-area">
+
+    <div class="container area-grid">
+
+        <div class="area-content">
+
+            <span class="section-tag">
+
+                SERVICE AREA
+
+            </span>
+
+            <h2>
+
+                Proudly Serving Johnston County & Surrounding Areas
+
+            </h2>
+
+            <p>
+
+                We proudly provide dump trailer rentals, junk removal,
+                cleanouts, and material delivery throughout Johnston County
+                and nearby communities.
+
+                Not sure if you're in our service area?
+                Give us a call—we're happy to help.
+
+            </p>
+
+            <div class="city-grid">
+
+                <div><i class="fas fa-location-dot"></i> Clayton</div>
+                <div><i class="fas fa-location-dot"></i> Selma</div>
+                <div><i class="fas fa-location-dot"></i> Smithfield</div>
+                <div><i class="fas fa-location-dot"></i> Four Oaks</div>
+                <div><i class="fas fa-location-dot"></i> Benson</div>
+                <div><i class="fas fa-location-dot"></i> Garner</div>
+                <div><i class="fas fa-location-dot"></i> Archer Lodge</div>
+                <div><i class="fas fa-location-dot"></i> Princeton</div>
+
+            </div>
+
+        </div>
+
+        <div class="area-image">
+
+            <img src="images/service-area.jpg"
+                 alt="Outta Here Dump & Deliver Service Area">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===========================
+CALL TO ACTION
+============================ -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <h2>
+
+            Ready to Get Started?
+
+        </h2>
+
+        <p>
+
+            Whether you need a dump trailer delivered,
+            junk removed,
+            or materials hauled,
+            we're ready to help.
+
+        </p>
+
+        <a href="#quote" class="btn btn-primary">
+
+            Request Your Free Quote
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===========================
+QUOTE FORM
+============================ -->
+
+<section id="quote" class="quote">
+
+    <div class="container quote-grid">
+
+        <div class="quote-info">
+
+            <span class="section-tag">
+
+                FREE ESTIMATE
+
+            </span>
+
+            <h2>
+
+                Request Your Quote
+
+            </h2>
+
+            <p>
+
+                Fill out the form and we'll contact you as soon as possible.
+
+            </p>
+
+            <div class="contact-item">
+
+                <i class="fas fa-phone"></i>
+
+                <div>
+
+                    <strong>Call</strong>
+
+                    <p>(919) XXX-XXXX</p>
+
+                </div>
+
+            </div>
+
+            <div class="contact-item">
+
+                <i class="fas fa-envelope"></i>
+
+                <div>
+
+                    <strong>Email</strong>
+
+                    <p>OuttaHereDD@gmail.com</p>
+
+                </div>
+
+            </div>
+
+            <div class="contact-item">
+
+                <i class="fas fa-location-dot"></i>
+
+                <div>
+
+                    <strong>Service Area</strong>
+
+                    <p>Johnston County, North Carolina</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <form
+            name="quote"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="quote-form">
+
+            <input type="hidden" name="form-name" value="quote">
+
+            <p hidden>
+
+                <label>
+
+                    Don't fill this out:
+                    <input name="bot-field">
+
+                </label>
+
+            </p>
+
+            <div class="input-group">
+
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Phone</label>
+
+                <input
+                    type="tel"
+                    name="phone"
+                    required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Service Needed</label>
+
+                <select
+                    name="service"
+                    required>
+
+                    <option value="">
+                        Select One
+                    </option>
+
+                    <option>
+                        Dump Trailer Rental
+                    </option>
+
+                    <option>
+                        Junk Removal
+                    </option>
+
+                    <option>
+                        Garage Cleanout
+                    </option>
+
+                    <option>
+                        Property Cleanout
+                    </option>
+
+                    <option>
+                        Material Delivery
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Property Address</label>
+
+                <input
+                    type="text"
+                    name="address">
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Project Details</label>
+
+                <textarea
+                    name="message"
+                    rows="6"
+                    placeholder="Tell us about your project..."></textarea>
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                type="submit">
+
+                Get My Free Quote
+
+            </button>
+
         </form>
 
-        <div class="agreement-box">
-          <label>
-            <input type="checkbox" id="agreedIndicator" disabled>
-            <span>You must review pricing, dump rules, and click <strong>I Agree</strong> before submitting a quote request.</span>
-          </label>
-        </div>
-
-        <div class="pillrow">
-          <div class="pill">Fastest replies by text</div>
-          <div class="pill">Works for homeowners and contractors</div>
-        </div>
-        <div class="mini">You can also call or text <strong>919-323-7175</strong>.</div>
-        <p style="text-align:center; margin-top:14px;">
-          <a href="#" class="pricing-link open-pricing-popup">See full pricing & dump rules before booking</a>
-        </p>
-      </div>
     </div>
-  </header>
 
- <section id="pricing">
-    <div class="container">
-      <div class="cards">
-        <div class="card">
-          <h3>1 Day Rental</h3>
-          <div class="price">$299</div>
-          <div class="muted">Great for quick cleanups and weekend projects.</div>
-          <ul class="features">
-            <li>Trailer delivery included</li>
-            <li>Full trailer pickup included</li>
-            <li>Perfect for DIY garage or household clean outs</li>
-            <li>Fast booking</li>
-          </ul>
-          <a href="#contact" class="btn btn-primary">Book This</a>
-        </div>
-        <div class="card" style="border:2px solid var(--red); transform:translateY(-6px);">
-          <h3>2 Day Rental</h3>
-          <div class="price">$399</div>
-          <div class="muted">Best value for bigger projects and remodel debris.</div>
-          <ul class="features">
-            <li>Extra time for DIY loading</li>
-            <li>Driveway drop-off and pickup</li>
-            <li>Ideal for moving, renovation, or yard cleanup</li>
-            <li>Popular DIY homeowner option</li>
-          </ul>
-          <a href="#contact" class="btn btn-primary">Most Popular</a>
-        </div>
-        <div class="card">
-          <h3>Full Service Cleanout</h3>
-          <div class="price">Call</div>
-          <div class="muted">Need us to do the labor too? We’ll price the whole job.</div>
-          <ul class="features">
-            <li>Garage cleanouts</li>
-            <li>Household junk removal</li>
-            <li>Rental property turn cleanups</li>
-            <li>Custom quote based on job scope</li>
-          </ul>
-          <a href="#contact" class="btn btn-primary">Ask About Availability</a>
-        </div>
-      </div>
+</section>
 
-      <div class="pricing-link-wrap">
-        <a href="#" class="pricing-link open-pricing-popup">View Full Pricing, Service Agreement & Dump Rules →</a>
-      </div>
-    </div>
-  </section>
 
-  <section class="band" id="services">
-    <div class="container">
-      <h2 class="section-title">Services Customers Actually Search For</h2>
-      <div class="service-grid">
-        <div class="service"><h3>Dump Trailer Rentals</h3><p>Easy drop-off and pickup for household, remodel, and cleanup projects.</p></div>
-        <div class="service"><h3>Junk Removal</h3><p>Furniture, boxes, garage clutter, and general junk hauled away fast.</p></div>
-        <div class="service"><h3>Garage & Property Cleanouts</h3><p>Perfect for move-outs, estate cleanups, storage areas, and bulky debris.</p></div>
-        <div class="service"><h3>Material Delivery</h3><p>Gravel, dirt, mulch, and other landscape materials delivered where you need them.</p></div>
-      </div>
-    </div>
-  </section>
 
-  <section id="why-us">
-    <div class="container split">
-      <div class="photo-frame">
-        <img src="truck-trailer.jpg" alt="White Ford truck towing black dump trailer">
-      </div>
-      <div>
-        <h2 class="section-title" style="text-align:left; margin-bottom:12px;">Why People Choose Outta Here Dump & Deliver</h2>
-        <div class="bullets">
-          <div class="bullet">✔ Fully insured local business with a clean, professional setup</div>
-          <div class="bullet">✔ Trailer ready for residential and contractor jobs</div>
-          <div class="bullet">✔ Fast communication by call, text, email, or form</div>
-          <div class="bullet">✔ Clear pricing instead of making customers guess</div>
-          <div class="bullet">✔ Great fit for homeowners, landlords, and small contractors</div>
-          <div class="bullet">✔ Service area messaging built for Clayton, Selma, Smithfield, and surrounding areas</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ===========================
+FOOTER
+============================ -->
 
-  <section>
-    <div class="container">
-      <div class="cta">
-        <div>
-          <h2>Need a trailer or cleanout quote today?</h2>
-          <p>Call now, text photos of the job, or send the quote form and get a fast response.</p>
-        </div>
-        <div class="cta-actions">
-          <a class="btn btn-primary" href="tel:9193237175">Call Now</a>
-          <a class="btn btn-light" href="sms:9193237175">Text Photos</a>
-        </div>
-      </div>
-    </div>
-  </section>
+<footer>
 
-  <footer>
     <div class="container footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="logo.PNG" alt="Outta Here Dump & Deliver logo">
-          <div>Outta Here Dump & Deliver</div>
+
+        <div>
+
+            <img
+                src="images/logo.png"
+                alt="Outta Here Dump & Deliver Logo"
+                class="footer-logo">
+
+            <p>
+
+                Professional dump trailer rentals,
+                junk removal,
+                cleanouts,
+                and material delivery throughout Johnston County.
+
+            </p>
+
         </div>
-        <p class="small">Dump trailer rentals, junk removal, garage cleanouts, and material delivery.</p>
-        <p class="small">Call or Text: <a href="tel:9193237175">919-323-7175</a> • <a href="mailto:OuttaHereDD@gmail.com">OuttaHereDD@gmail.com</a></p>
-      </div>
-      <div class="footer-links">
-        <span>Clayton</span>
-        <span>Selma</span>
-        <span>Smithfield</span>
-        <span>Johnston County</span>
-      </div>
+
+        <div>
+
+            <h3>
+
+                Quick Links
+
+            </h3>
+
+            <ul>
+
+                <li><a href="#">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#quote">Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <div>
+
+            <h3>
+
+                Contact
+
+            </h3>
+
+            <p>
+
+                <i class="fas fa-phone"></i>
+
+                (919) XXX-XXXX
+
+            </p>
+
+            <p>
+
+                <i class="fas fa-envelope"></i>
+
+                OuttaHereDD@gmail.com
+
+            </p>
+
+            <p>
+
+                <i class="fas fa-location-dot"></i>
+
+                Johnston County, NC
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <h3>
+
+                Follow Us
+
+            </h3>
+
+            <a href="#" class="social">
+
+                <i class="fab fa-facebook-f"></i>
+
+            </a>
+
+        </div>
+
     </div>
-  </footer>
 
-  <div class="modal-overlay" id="pricingModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pricingModalTitle">
-      <button class="close-btn" id="closePricingModal" aria-label="Close popup">×</button>
-      <h3 id="pricingModalTitle">Review Pricing & Rules Before Booking</h3>
-      <p>Customers must agree to these terms before submitting a quote request.</p>
-      <ul>
-        <li>Load must remain level with the top rails</li>
-        <li>No paint, chemicals, tires, batteries, or liquids</li>
-        <li>Overfill fee: $75+</li>
-        <li>Heavy materials: $50–$150 additional</li>
-        <li>Sorting / mixed load fee: $50+</li>
-        <li>Extended rental: $100/day</li>
-      </ul>
-      <div class="agree-box">
-        <label>
-          <input type="checkbox" id="modalAgreeCheckbox">
-          <span>I have reviewed the pricing sheet, service agreement, and dump rules, and I agree to these terms.</span>
-        </label>
-        <div class="error-text" id="agreeError">Please check the box before continuing.</div>
-      </div>
-      <div class="modal-actions">
-        <a class="btn btn-primary" href="/OuttaHereDD_Contract_Level_v2.pdf" target="_blank" rel="noopener">Open Full PDF</a>
-        <button class="btn btn-dark" id="confirmAgreementButton">I Agree</button>
-      </div>
+    <div class="copyright">
+
+        © 2026 Outta Here Dump & Deliver LLC.
+        All Rights Reserved.
+
     </div>
-  </div>
 
-  <script>
-    const modal = document.getElementById('pricingModal');
-    const openButtons = document.querySelectorAll('.open-pricing-popup');
-    const closeButton = document.getElementById('closePricingModal');
-    const quoteForm = document.getElementById('quoteForm');
-    const quoteSubmitButton = document.getElementById('quoteSubmitButton');
-    const modalAgreeCheckbox = document.getElementById('modalAgreeCheckbox');
-    const confirmAgreementButton = document.getElementById('confirmAgreementButton');
-    const agreeError = document.getElementById('agreeError');
-    const agreedIndicator = document.getElementById('agreedIndicator');
-    const agreedToTermsField = document.getElementById('agreedToTermsField');
+</footer>
 
-    let hasAgreedToTerms = false;
+<script src="script.js"></script>
 
-    function openModal() {
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      agreeError.style.display = 'none';
-    }
-
-    function setAgreedState() {
-      hasAgreedToTerms = true;
-      agreedIndicator.checked = true;
-      agreedToTermsField.value = 'Yes';
-      quoteSubmitButton.disabled = false;
-      quoteSubmitButton.classList.remove('btn-disabled');
-    }
-
-    quoteSubmitButton.disabled = true;
-    quoteSubmitButton.classList.add('btn-disabled');
-
-    openButtons.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openModal();
-      });
-    });
-
-    closeButton.addEventListener('click', closeModal);
-
-    confirmAgreementButton.addEventListener('click', function() {
-      if (!modalAgreeCheckbox.checked) {
-        agreeError.style.display = 'block';
-        return;
-      }
-      setAgreedState();
-      closeModal();
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    quoteForm.addEventListener('submit', function(e) {
-      if (!hasAgreedToTerms) {
-        e.preventDefault();
-        openModal();
-      }
-    });
-  </script>
 </body>
 </html>
