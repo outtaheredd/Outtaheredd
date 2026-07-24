@@ -142,3 +142,115 @@ SCROLL ANIMATIONS
     transform:translateY(0);
 
 }
+
+/*=========================================
+ Active Navigation Highlight
+=========================================*/
+
+const sections = document.querySelectorAll("section[id]");
+
+window.addEventListener("scroll", () => {
+
+    const scrollY = window.pageYOffset;
+
+    sections.forEach(section => {
+
+        const sectionHeight = section.offsetHeight;
+
+        const sectionTop = section.offsetTop - 120;
+
+        const sectionId = section.getAttribute("id");
+
+        const navLink = document.querySelector(
+            'nav a[href="#' + sectionId + '"]'
+        );
+
+        if (!navLink) return;
+
+        if (
+            scrollY > sectionTop &&
+            scrollY <= sectionTop + sectionHeight
+        ) {
+
+            navLink.classList.add("active-link");
+
+        } else {
+
+            navLink.classList.remove("active-link");
+
+        }
+
+    });
+
+});
+
+/*=========================================
+ Back To Top Button
+=========================================*/
+
+const topButton = document.createElement("button");
+
+topButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+
+topButton.className = "back-to-top";
+
+document.body.appendChild(topButton);
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 500) {
+
+        topButton.classList.add("show-top");
+
+    } else {
+
+        topButton.classList.remove("show-top");
+
+    }
+
+});
+
+topButton.addEventListener("click", () => {
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+});
+
+/*=========================================
+ Button Hover Effect
+=========================================*/
+
+document.querySelectorAll(".btn").forEach(button => {
+
+    button.addEventListener("mouseenter", () => {
+
+        button.style.transform = "translateY(-3px)";
+
+    });
+
+    button.addEventListener("mouseleave", () => {
+
+        button.style.transform = "";
+
+    });
+
+});
+
+/*=========================================
+ Footer Year
+=========================================*/
+
+const copyright = document.querySelector(".copyright");
+
+if (copyright) {
+
+    copyright.innerHTML =
+        `© ${new Date().getFullYear()} Outta Here Dump & Deliver LLC. All Rights Reserved.`;
+
+}
