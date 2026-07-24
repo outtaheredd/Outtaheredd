@@ -120,3 +120,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     });
 
 });
+
+/*==============================
+SCROLL ANIMATIONS
+==============================*/
+
+.hidden{
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:.7s ease;
+
+}
+
+.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
